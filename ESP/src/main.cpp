@@ -26,6 +26,7 @@ APIServer apiServer(deviceConfig, wifiStateManager, "/control");
 #else
 APIServer apiServer(deviceConfig, cameraHandler, "/control");
 StreamServer streamServer;
+IMUServer imuServer;
 #endif  // SIM_ENABLED
 
 void etvr_eye_tracker_web_init() {
@@ -48,6 +49,8 @@ void etvr_eye_tracker_web_init() {
 #ifndef SIM_ENABLED
       log_d("[SETUP]: Starting Stream Server");
       streamServer.startStreamServer();
+      log_d("[SETUP]: Starting IMU Server");
+      imuServer.startIMUServer();
 #endif  // SIM_ENABLED
       log_d("[SETUP]: Starting API Server");
       apiServer.setup();
@@ -57,6 +60,8 @@ void etvr_eye_tracker_web_init() {
 #ifndef SIM_ENABLED
       log_d("[SETUP]: Starting Stream Server");
       streamServer.startStreamServer();
+      log_d("[SETUP]: Starting IMU Server");
+      imuServer.startIMUServer();
 #endif  // SIM_ENABLED
       log_d("[SETUP]: Starting API Server");
       apiServer.setup();

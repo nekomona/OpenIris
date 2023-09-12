@@ -12,6 +12,7 @@
 #include <network/api/webserverHandler.hpp>
 #include <network/mDNS/MDNSManager.hpp>
 #include <network/stream/streamServer.hpp>
+#include <network/imu/imuServer.hpp>
 #include <network/wifihandler/wifihandler.hpp>
 #else
 #include <usb/etvr_eye_tracker_usb.hpp>
