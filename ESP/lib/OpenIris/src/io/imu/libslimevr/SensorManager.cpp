@@ -47,7 +47,7 @@ namespace SlimeVR
                 Serial.printf("IMU found at address 0x%02X\n", address);
             } else {
                 m_Sensor = new ErroneousSensor(imuType);
-                Serial.printf("Can't find I2C device on provided address 0x%d\n", address);
+                Serial.printf("Can't find I2C device on provided address 0x%02X\n", address);
                 return;
             }
 

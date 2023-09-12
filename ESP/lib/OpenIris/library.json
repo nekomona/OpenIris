@@ -19,6 +19,9 @@
   "export": {
     "include": "./src"
   },
+  "build": {
+    "srcDir": "./src"
+  },
   "dependencies": {},
   "version": "2.2.3",
   "frameworks": "arduino",

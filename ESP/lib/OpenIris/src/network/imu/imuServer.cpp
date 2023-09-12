@@ -24,6 +24,8 @@ esp_err_t IMUHelpers::response(httpd_req_t *req)
     if (res != ESP_OK)
         return res;
 
+    // Start timeout counting before sending first data
+    sensor->postSetup();
     while (true)
     {
         sensorManager->update();
@@ -41,9 +43,9 @@ esp_err_t IMUHelpers::response(httpd_req_t *req)
 
         // Only reaching here if hasNewDataToSend() == true
         if (res == ESP_OK)
-            res = httpd_resp_send_chunk(req, IMU_BOUNDARY, strlen(IMU_BOUNDARY));
+            res = httpd_resp_send(req, IMU_BOUNDARY, strlen(IMU_BOUNDARY));
         if (res == ESP_OK)
-            res = httpd_resp_send_chunk(req, imuEncoded, imuEncodedLen);
+            res = httpd_resp_send(req, imuEncoded, imuEncodedLen);
         if (res != ESP_OK)
             break;
     }
@@ -54,8 +56,6 @@ IMUServer::IMUServer(const int IMU_PORT) : IMU_SERVER_PORT(IMU_PORT) {}
 
 void IMUServer::setupIMU()
 {
-    // I2CSCAN::clearBus(static_cast<int>(PIN_IMU_SDA), static_cast<int>(PIN_IMU_SCL));
-
     // using `static_cast` here seems to be better, because there are 2 similar function signatures
     Wire.begin(static_cast<int>(IMU_SDA_GPIO_NUM), static_cast<int>(IMU_SCL_GPIO_NUM));
 
@@ -63,14 +63,13 @@ void IMUServer::setupIMU()
     Wire.setTimeOut(150);
     Wire.setClock(400000);
 
-    // Wait for IMU to boot
-    delay(500);
-
     sensorManager.buildSensor(IMU_BNO085, IMU_BNO_ADDRESS_AD0_HI, IMU_INT_GPIO_NUM);
 }
 
 int IMUServer::startIMUServer()
 {
+    setupIMU();
+
     // WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); //! Turn-off the 'brownout detector'
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.stack_size = 20480;

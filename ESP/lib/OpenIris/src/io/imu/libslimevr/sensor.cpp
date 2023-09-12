@@ -26,7 +26,7 @@ SensorStatus SlimeVR::Sensors::Sensor::getSensorState() {
     return isWorking() ? SensorStatus::SENSOR_OK : SensorStatus::SENSOR_OFFLINE;
 }
 
-const char * getIMUNameByType(int imuType) {
+const char * SlimeVR::Sensors::getIMUNameByType(int imuType) {
     switch(imuType) {
         case IMU_BNO080:
             return "BNO080";
