@@ -17,7 +17,7 @@
     "url": "https://github.com/lorow/OpenIris.git"
   },
   "export": {
-    "include": "/lib/src"
+    "include": "./src"
   },
   "dependencies": {},
   "version": "2.2.3",
