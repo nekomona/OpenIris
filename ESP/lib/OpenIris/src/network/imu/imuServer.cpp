@@ -43,9 +43,9 @@ esp_err_t IMUHelpers::response(httpd_req_t *req)
 
         // Only reaching here if hasNewDataToSend() == true
         if (res == ESP_OK)
-            res = httpd_resp_send(req, IMU_BOUNDARY, strlen(IMU_BOUNDARY));
+            res = httpd_resp_send_chunk(req, IMU_BOUNDARY, 7); // strlen(IMU_BOUNDARY)
         if (res == ESP_OK)
-            res = httpd_resp_send(req, imuEncoded, imuEncodedLen);
+            res = httpd_resp_send_chunk(req, imuEncoded, imuEncodedLen);
         if (res != ESP_OK)
             break;
     }
